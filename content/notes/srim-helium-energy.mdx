@@ -1,0 +1,51 @@
+export const metadata = {
+  title: "Choosing a helium-ion energy for boron vacancies in 10 nm hBN",
+  date: "2026-07-24",
+  summary:
+    "How SRIM output turns into a beam plan: vacancy yield inside the film, the fluence needed for a target defect density, and where overdamage starts.",
+  draft: true,
+};
+
+The goal is boron vacancies (VB⁻) at a chosen areal density, somewhere between $10^{10}$ and $10^{12}\ \mathrm{cm^{-2}}$, in a 10 nm hBN flake on SiO₂, without destroying the lattice around them. Beam time is scarce, so the energy and fluence have to be chosen before we get on the beam.
+
+## What SRIM gives
+
+SRIM/TRIM follows ions one at a time through an amorphous target and records every displaced atom. With displacement energies of 19 eV for boron and 23 eV for nitrogen, each run produces a vacancy depth profile $v_B(z)$ in vacancies per ångström per ion. What matters is the part inside the film:
+
+$$
+Y_B = \int_0^{t} v_B(z)\, dz, \qquad t = 10\ \mathrm{nm}.
+$$
+
+<Figure n={1} src="/figures/srim-campaigns.png" alt="Six-panel SRIM analysis of helium ions in 10 nm hBN on SiO2" width={2200} height={1337}>
+  (A) Vacancy profiles, (B) ion stopping, (C) boron vacancies per ion versus energy, (D) substrate contamination, (E) 10 nm versus 50 nm films, (F) DPA versus fluence.
+</Figure>
+
+## Energy
+
+Lower energy keeps more of the collision cascade inside the film. At 3 keV a helium ion leaves about $Y_B = 3.2$ boron vacancies in 10 nm of hBN. At 30 keV its range is a few hundred nanometers, most of the damage lands in the substrate, and $Y_B$ falls to about 0.5. Across the whole 1–30 keV sweep, SRIM shows no substrate contamination of the film (panel D).
+
+Film thickness matters as much as energy. The same 3 keV beam yields 15.1 vacancies per ion in a 50 nm film, because the whole cascade now fits inside it. Yields from different thicknesses aren't interchangeable.
+
+## Fluence
+
+If a fraction $\eta$ of boron vacancies end up as optically active VB⁻, reaching a target density $n$ takes a fluence
+
+$$
+\Phi = \frac{n}{\eta\, Y_B}.
+$$
+
+$\eta$ is the least certain number here. I bracket it at 25–50% until our own PL data can calibrate it. For $n = 10^{11}\ \mathrm{cm^{-2}}$, $\eta = 0.25$ and 3 keV helium, that's $\Phi \approx 1.3\times10^{11}\ \mathrm{cm^{-2}}$. The resulting defects average about $1/\sqrt{n} \approx 32$ nm apart.
+
+## Overdamage
+
+Damage per boron atom grows linearly with fluence:
+
+$$
+\mathrm{DPA} = \frac{\Phi\, Y_B}{N_B}, \qquad N_B \approx 5.1\times10^{16}\ \mathrm{cm^{-2}}.
+$$
+
+$N_B$ comes from SRIM's own target density (2.1 g/cm³), so the DPA stays consistent with the simulation. I flag overdamage at 0.01 DPA. For 3 keV helium that's reached near $1.6\times10^{14}\ \mathrm{cm^{-2}}$, three orders of magnitude above the fluence in the example. There's a lot of headroom before the lattice is the problem.
+
+## What this leaves out
+
+SRIM treats the target as amorphous and at zero temperature. It has no channeling, no vacancy–interstitial recombination, and no annealing. All of these push real vacancy counts below SRIM's. The 0.01 DPA threshold is a working heuristic, not a measured value. So these numbers are upper bounds for planning, and the irradiation itself is what settles them.

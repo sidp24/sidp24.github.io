@@ -1,0 +1,54 @@
+export const metadata = {
+  title: "Measuring c from a phase shift, and what the error bar meant",
+  date: "2026-09-11",
+  summary:
+    "A senior-lab fit put the speed of light 2% from the accepted value, which was either 0.8σ or 5.4σ away depending on one line in how SciPy reports uncertainty.",
+  draft: true,
+};
+
+The first senior-lab measurement of the semester is the speed of light. Light is amplitude-modulated at frequency $f$, sent over a path of length $L = 34.07 \pm 0.03$ m, and the returning signal's phase is compared with the reference. The light arrives a time $L/c$ late, so in degrees the phase lag is
+
+$$
+\phi = 360^\circ \, f \, \frac{L}{c} + \phi_0,
+$$
+
+where $\phi_0$ absorbs fixed delays in the electronics. Fitting $\phi$ against $f$ gives a slope $m = 360^\circ L / c$, so
+
+$$
+c = \frac{360^\circ L}{m}.
+$$
+
+<Figure n={1} src="/figures/phase-vs-frequency.png" alt="Phase shift versus modulation frequency with a straight-line fit" width={1400} height={1000}>
+  Nine phase measurements from 1.00 to 3.25 MHz with an orthogonal-distance-regression fit.
+</Figure>
+
+## Why ODR
+
+Both axes have uncertainty: frequency to ±0.01 MHz, phase to between ±2° and ±5.5°. Ordinary weighted least squares treats $x$ as exact. Orthogonal distance regression (ODR) weights by both. For a straight line that amounts to giving each point an effective variance
+
+$$
+\sigma_{\text{eff}}^2 = \sigma_\phi^2 + m^2 \sigma_f^2 .
+$$
+
+Here $m\sigma_f \approx 0.4^\circ$, small next to $\sigma_\phi$, so ODR and weighted least squares agree on the slope: 40.02 deg/MHz. That gives $c = 3.065 \times 10^8$ m/s, 2.2% above the accepted $2.998 \times 10^8$ m/s.
+
+## The error bar
+
+The two methods did not agree on the uncertainty. ODR reported ±0.16 deg/MHz, while weighted least squares gave ±1.15, about seven times larger. Propagated to $c$:
+
+| Slope uncertainty | $c$ ($10^8$ m/s) | Distance from accepted |
+| --- | --- | --- |
+| ±0.16 (ODR, as reported) | 3.065 ± 0.012 | 5.4σ |
+| ±1.15 (from the error bars) | 3.065 ± 0.088 | 0.8σ |
+
+Same data and same slope, with opposite conclusions. The cause is that SciPy's `odr` reports `sd_beta` scaled by the residual variance, which multiplies the covariance by the reduced chi-squared. For this data
+
+$$
+\chi^2_\nu = \frac{1}{N-2}\sum_{i=1}^{N} \frac{(\phi_i - m f_i - b)^2}{\sigma_{\text{eff},i}^2} \approx 0.02,
+$$
+
+so the points scatter about the line roughly seven times less than their error bars predict, and the scaling shrinks the uncertainty to match.
+
+Neither number is automatically right. A $\chi^2_\nu$ that low says the phase error bars are too generous. If the tighter scatter is real, though, the 2.2% offset is a systematic error the fit can't see: the path length, the frequency calibration, or something in $\phi_0$ that isn't actually constant. So the result should be reported together with $\chi^2_\nu$, without quietly picking whichever error bar makes the answer look good.
+
+One practical footnote: SciPy 1.17 deprecates `scipy.odr` in favor of the standalone `odrpack` package. Rerunning the same script there, the fit stopped at the initial guess ("Problem is not full rank at solution") and returned a slope of exactly 40 ± 0. Check the stop reason before trusting the output.
