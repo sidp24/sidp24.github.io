@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
 
-// Served from the root of https://sidp24.github.io, so no basePath is needed.
 const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
+  basePath: "/portfolio",
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   images: {
     // Static export has no image-optimization server; scripts/import-assets.mjs
