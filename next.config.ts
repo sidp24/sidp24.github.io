@@ -4,7 +4,6 @@ import createMDX from "@next/mdx";
 const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
-  basePath: "/portfolio",
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   images: {
     // Static export has no image-optimization server; scripts/import-assets.mjs
