@@ -24,7 +24,7 @@ export const projects: Project[] = [
     title: "hBN Photoluminescence Pipeline",
     year: "2025–26",
     summary:
-      "Processes confocal PL maps of hBN before and after irradiation: crops to the real scan area, fits and clusters bright spots, and compares conditions across 24 datasets from 3 instruments. An early version quietly distorted the data because I had tuned it to look right before I understood the physics well enough to judge it. The rebuild is what the lab uses now.",
+      "Processes confocal PL maps of hBN before and after irradiation: crops to the real scan area, fits and clusters bright spots, and compares conditions across 24 datasets from 3 instruments. An early version quietly distorted the data because I had tuned it to look right before I understood the physics well enough to judge it. The rebuilt version is the one I use now.",
     areas: ["Physics"],
     tech: ["Python", "NumPy", "SciPy", "pandas", "Matplotlib"],
     links: { writeup: "/research/#irradiation" },
@@ -60,16 +60,6 @@ export const projects: Project[] = [
     areas: ["Physics"],
     tech: ["Python", "Tkinter", "NumPy", "Matplotlib"],
     links: { writeup: "/research/#tooling" },
-  },
-  {
-    slug: "negf-repro",
-    title: "Reproducing ML Quantum Transport",
-    year: "2026",
-    summary:
-      "An independent check of DeePTB-NEGF (arXiv:2512.11291) on a CPU-only machine. Graphene transmission matched the DFT reference to 0.26% in integrated transmission; a single nitrogen vacancy in hBN produced plausible-looking output with no warning, outside anything the model was validated on.",
-    areas: ["Physics"],
-    tech: ["Python", "PyTorch", "DeePTB", "ASE", "pytest"],
-    links: { writeup: "/research/#side-study" },
   },
 
   // Data & quant
@@ -124,7 +114,7 @@ export const projects: Project[] = [
     year: "2026",
     badge: "HackTheKnight 2026",
     summary:
-      "Bots for a simulated exchange in a team trading competition: an Avellaneda–Stoikov market maker, mean-reversion and trend strategies, and a prediction-market bot, plus a backtester to compare them.",
+      "A three-person entry in a trading-bot competition on a simulated exchange. My bots: an Avellaneda–Stoikov fair-pricing market maker, plus mean-reversion, arbitrage, signal-driven, and prediction-market strategies. The backtester was shared work.",
     areas: ["Data & Quant", "Hackathons"],
     tech: ["Python"],
     links: { repo: gh("Team1HackTheKnight") },
@@ -136,7 +126,7 @@ export const projects: Project[] = [
     title: "AirNote",
     year: "2025",
     summary:
-      "An AR whiteboard: notes anchored to real surfaces and shared live. Keeping the board stable while the camera moves was the core problem; it took several rewrites of the homography and optical-flow tracking before it held up outside controlled conditions. FastAPI services sync over WebSockets, and a Gemini layer answers questions about the board.",
+      "An AR whiteboard built with Vishal Nagamalla: notes anchored to real surfaces and shared live. I wrote the camera tracking and most of the capture app. Keeping the board stable while the camera moves was the core problem, and it took several rewrites of the homography and optical-flow tracking before it held up outside controlled conditions. Vishal built most of the Gemini service that answers questions about the board.",
     areas: ["Software"],
     tech: ["Python", "FastAPI", "OpenCV", "WebSocket", "Firebase"],
     links: { repo: gh("AirNote") },
@@ -207,14 +197,14 @@ export const projects: Project[] = [
     links: { repo: gh("PM") },
   },
   {
-    slug: "vex-24in",
-    title: "VEX U 24-inch Robot",
-    year: "2024–25",
+    slug: "scar-xdrive",
+    title: "X-Drive Driver Control",
+    year: "2026",
     summary:
-      "Competition code for SCAR's 24-inch robot in the High Stakes season: PID motion control and X-drive holonomic kinematics in PROS, with an autonomous routine scoring 110 points and path tracking within 8 cm.",
+      "Driver control for SCAR's X-drive robot: holonomic mixing of forward, strafe, and turn inputs across four motor groups, with deadbands and power normalization so diagonal moves don't saturate.",
     areas: ["Robotics"],
     tech: ["C++", "PROS"],
-    links: { repo: gh("VEX25-SCAR-24in") },
+    links: { repo: "https://github.com/SCAR-Robotics/X-drive" },
   },
 
   // Hackathons
@@ -224,7 +214,7 @@ export const projects: Project[] = [
     year: "2024",
     badge: "HackRU 2024 · 1st place",
     summary:
-      "A gesture-controlled AR neuroanatomy viewer. MediaPipe and OpenCV hand tracking drive a 3D brain model in Unity, built in 24 hours.",
+      "A gesture-controlled AR neuroanatomy viewer, built in 24 hours with a team that included Vishal Nagamalla. MediaPipe and OpenCV hand tracking drive a 3D brain model in Unity.",
     areas: ["Hackathons", "Software"],
     tech: ["Unity", "C#", "MediaPipe", "OpenCV"],
     links: { repo: gh("HackRU") },
@@ -236,6 +226,7 @@ export const projects: Project[] = [
   {
     slug: "data-viz-dashboard",
     title: "Data Visualization Dashboard",
+    year: "2023",
     summary: "Upload a CSV and explore it through interactive scatter and bar charts with configurable labels and styles.",
     areas: ["Software"],
     tech: ["Python", "Dash", "Plotly"],

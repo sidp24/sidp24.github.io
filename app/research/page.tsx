@@ -30,10 +30,11 @@ export default function ResearchPage() {
           <p className="mt-2 max-w-[40rem] text-pretty">
             The negatively charged boron vacancy, VB⁻, is an optically addressable spin defect in hexagonal boron nitride (hBN).
             Its spin state can be read out with light at room temperature, and because hBN is a layered crystal a few nanometers
-            thick, the defect can sit almost directly against whatever it is measuring. My work is on creating these defects
-            deliberately. I use Monte Carlo ion-transport simulation to choose beam conditions, irradiate exfoliated flakes, and
-            characterize the results with confocal photoluminescence, atomic force microscopy, and optically detected magnetic
-            resonance. Much of it runs on analysis software I wrote for the group.
+            thick, the defect can sit almost directly against whatever it is measuring. The project creates these defects
+            deliberately, by irradiating exfoliated flakes with an ion beam and checking the result with confocal
+            photoluminescence and optically detected magnetic resonance. Alongside the measurements, I wrote the PL analysis
+            pipeline and bench tools for PL and AFM data, and I have been building Monte Carlo ion-transport simulations to choose
+            beam conditions for future irradiations.
           </p>
         </div>
         <aside aria-label="Lab log">
@@ -95,15 +96,16 @@ export default function ResearchPage() {
         aside={
           <>
             <p className="kicker mb-1.5">Process</p>
-            Exfoliation onto SiO₂/Si (PC/PVA dry transfer for stacks) → PL map → ion irradiation → PL map again
+            Exfoliation and thermal-release-tape transfer onto SiO₂/Si → PL map → 2 MeV irradiation in the RBS chamber → PL map
+            again
           </>
         }
       >
         <div className="prose-notebook">
           <p>
             Boron vacancies form when an incoming ion knocks a boron atom out of the lattice. Our first samples were exfoliated hBN
-            flakes on SiO₂/Si, mapped with confocal photoluminescence (PL), irradiated with a 2 MeV helium beam in the Rutherford
-            backscattering chamber, and mapped again.
+            flakes on SiO₂/Si, mapped with confocal photoluminescence (PL), irradiated with a 2 MeV ion beam in the Rutherford
+            backscattering (RBS) chamber, and mapped again.
           </p>
           <p>
             The first trial, a 30-minute exposure, did not raise PL at all. Typical intensities dropped from roughly 120–160 to
@@ -113,8 +115,7 @@ export default function ResearchPage() {
           </p>
           <p>
             PL intensity alone cannot say whether a bright spot is VB⁻ or some other emitter. That needs a spin measurement (§5).
-            The trials did make two things clear: MeV ions are an inefficient way to damage a film this thin, and beam time is too
-            scarce to choose conditions by trial and error. Both led to the simulation work in §3.
+            Choosing beam energy and dose more deliberately is what the simulation work in §3 is for.
           </p>
         </div>
         <Figure n={2} src="/figures/pl-map-overview.png" alt="Five confocal photoluminescence maps of hBN with bright spots marked" width={1800} height={1167}>
@@ -164,8 +165,8 @@ export default function ResearchPage() {
           <p>
             Alongside SRIM I built a classifier that takes an ion, energy, and fluence and places the result in a damage regime:
             below threshold, sparse, dense, or overdamaged. It also returns the closest matches from a table of about 20 published
-            irradiation experiments. An earlier, larger version also tried to predict spin coherence and ODMR contrast. I cut that
-            part, because the calibration data supports a damage regime and nothing finer.
+            irradiation experiments. An earlier version also estimated spin observables; the current one reports only the damage
+            regime and the literature matches.
           </p>
         </div>
       </Section>
@@ -183,10 +184,10 @@ export default function ResearchPage() {
       >
         <div className="prose-notebook">
           <p>
-            Most of the lab&apos;s raw data passes through code I wrote. The PL pipeline crops each map to its real scan area, fits
-            and clusters bright spots, and compares conditions. It replaced a dozen one-off scripts, and every past analysis can now
-            be rerun from raw data with one command. An early version distorted the data in a way that looked fine: I had tuned it to
-            look right before I understood the physics well enough to judge it. The rebuild is what the group uses now.
+            I wrote the analysis code for our PL data. The pipeline crops each map to its real scan area, fits and clusters bright
+            spots, and compares conditions. It replaced a dozen one-off scripts, and every past analysis can now be rerun from raw
+            data with one command. An early version distorted the data in a way that looked fine: I had tuned it to look right
+            before I understood the physics well enough to judge it. The rebuilt version is the one I use now.
           </p>
           <p>
             For the July 2026 sample of 23 flakes, between 10 and 231 nm thick, I wrote two bench tools. One overlays PL maps on
@@ -217,42 +218,7 @@ export default function ResearchPage() {
         </div>
       </Section>
 
-      <Section
-        id="side-study"
-        n={6}
-        title="Side study: checking a machine-learning transport code"
-        aside={
-          <>
-            <p className="kicker mb-1.5">Reference</p>
-            DeePTB-NEGF, arXiv:2512.11291. Run on a CPU-only Windows machine with PyTorch, DeePTB, dpnegf, and ASE.
-          </>
-        }
-      >
-        <div className="prose-notebook">
-          <p>
-            Before trusting a machine-learned tight-binding model for defect transport, I tried to reproduce its published results.
-            For pristine graphene it held up: integrated transmission over ±10 eV came to 44.63 against 44.77 from the DFT-NEGF
-            reference, a 0.26% difference.
-          </p>
-          <p>
-            Then I removed one nitrogen atom from hBN. The model returned a smooth, physically reasonable curve: transmission
-            suppressed, the band gap preserved, resonances where you might expect them. But no DFT calculation exists for that
-            structure, and the model has no mechanism for flagging an input outside anything it was validated on. It produces a
-            plausible answer whether or not the answer is right, so for anything outside its training, plausible output is not
-            evidence of correctness.
-          </p>
-        </div>
-        <div className="grid gap-x-6 sm:grid-cols-2">
-          <Figure n={6} src="/figures/graphene-transmission.png" alt="Graphene transmission: DeePTB-NEGF versus DFT-NEGF reference" width={1344} height={1056}>
-            Graphene transmission: my DeePTB-NEGF run (blue) against the TranSIESTA/TBtrans reference (green dashed).
-          </Figure>
-          <Figure n={7} src="/figures/hbn-vacancy-probe.png" alt="Transmission of pristine hBN versus hBN with a nitrogen vacancy" width={1344} height={832}>
-            Pristine hBN versus a single nitrogen vacancy. Plausible, and unverifiable: no reference exists for the defect case.
-          </Figure>
-        </div>
-      </Section>
-
-      <Section id="outputs" n={7} title="Talks, reports, and mentoring">
+      <Section id="outputs" n={6} title="Reports and mentoring">
         <ul className="border-t border-rule">
           {outputs.map((o) => (
             <li key={o.title} className="grid grid-cols-[4.75rem_minmax(0,1fr)] gap-x-4 border-b border-rule py-4 sm:grid-cols-[6rem_minmax(0,1fr)]">
@@ -275,7 +241,7 @@ export default function ResearchPage() {
             </div>
           </li>
         </ul>
-        <p className="mt-4 text-[0.95rem] text-muted">Reports and slides are internal to the group and available on request.</p>
+        <p className="mt-4 text-[0.95rem] text-muted">Reports are internal to the group.</p>
       </Section>
     </>
   );

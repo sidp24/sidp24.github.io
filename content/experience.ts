@@ -19,7 +19,7 @@ export const experience: ExperienceEntry[] = [
     bullets: [
       "Study VB⁻ spin defects in hexagonal boron nitride created by helium-ion irradiation, correlating dose with defect yield and optical response.",
       "Run SRIM/TRIM Monte Carlo campaigns (85 parameterized configurations) and turn the output into fluence-to-vacancy tables used to pick irradiation conditions.",
-      "Prepare samples by exfoliation and PC/PVA dry-transfer stacking; characterize them with confocal photoluminescence, ODMR, and AFM.",
+      "Prepare samples by exfoliation and PC/PVA dry-transfer stacking; characterize them with ODMR and confocal photoluminescence.",
       "Built Python pipelines covering 24 datasets from 3 instruments, cutting per-sample analysis from 2 hours to 10 minutes and retiring 12+ one-off scripts.",
       "Mentored an Aresty-funded undergraduate through ODMR, sample preparation, and SRIM simulation.",
     ],

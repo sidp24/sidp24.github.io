@@ -21,8 +21,6 @@ const manifest = [
   [join(CODE, "hBN Analysis/report_figures/grid_overview.png"), "figures/pl-map-overview.png", 1800],
   [join(CODE, "AFM-GUI/processed/2026.07.20_0/images/037_1F_Height.png"), "figures/afm-flake.png", 1000],
   [join(CODE, "PL-GUI/data/thickness_vs_color.png"), "figures/thickness-vs-color.png", 1400],
-  [join(CODE, "QT-Accel/transport-repro/benchmarks/graphene/results/graphene_k100_comparison.png"), "figures/graphene-transmission.png", 1400],
-  [join(CODE, "QT-Accel/transport-repro/benchmarks/probe_hbn_vacancy/results/vacancy_comparison.png"), "figures/hbn-vacancy-probe.png", 1400],
   [join(CODE, "Senior Lab/phi_vs_f_fit.png"), "figures/phase-vs-frequency.png", 1400],
 
   // Robotics

@@ -9,11 +9,11 @@ export type Entry = {
 export const robotics = {
   team: "SCAR Robotics",
   org: "Rutgers IEEE · VEX U",
-  role: "President & Programming Lead",
-  period: "2024 – Present",
+  role: "President & Build Lead",
+  period: "Jan 2025 – Present",
   bullets: [
-    "Lead a 25+ person team across mechanical, electrical, and software subteams through the full build-to-competition cycle each season.",
-    "Own the roster, a $12,000 budget, sponsorship outreach, funding proposals to university departments, and travel grants for Worlds.",
+    "Lead a 150+ person team across mechanical, electrical, and software subteams through the full build-to-competition cycle each season.",
+    "Own the roster, a $25,000+ budget, sponsorship outreach, funding proposals to university departments, and travel grants for Worlds.",
     "Implemented PID motion control and X-drive holonomic kinematics in PROS (C++), raising the autonomous routine to 110 points with path tracking inside 8 cm.",
     "Train incoming members in the team's build process and code, and started Aether, a shared C++ framework for future seasons.",
   ],

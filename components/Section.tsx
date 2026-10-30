@@ -23,7 +23,7 @@ export default function Section({
     >
       <div className="min-w-0">
         <h2 id={`${id}-title`} className="group flex items-baseline gap-3 text-[1.75rem] leading-tight font-medium tracking-tight">
-          <span className="font-mono text-sm font-normal text-accent">§{n}</span>
+          <span className="font-mono text-base font-normal text-accent">§{n}</span>
           <a href={`#${id}`} className="decoration-rule decoration-1 underline-offset-4 hover:underline">
             {title}
           </a>

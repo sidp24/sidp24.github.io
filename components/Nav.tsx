@@ -26,7 +26,7 @@ export default function Nav({ items }: { items: NavItem[] }) {
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className="rounded px-2.5 py-1.5 text-[0.98rem] text-muted transition-colors hover:text-ink aria-[current=page]:text-ink aria-[current=page]:underline aria-[current=page]:decoration-accent aria-[current=page]:decoration-1 aria-[current=page]:underline-offset-[6px]"
+                  className="rounded px-2.5 py-1.5 text-[0.98rem] text-muted transition-colors hover:text-ink aria-[current=page]:text-accent aria-[current=page]:underline aria-[current=page]:decoration-accent aria-[current=page]:decoration-1 aria-[current=page]:underline-offset-[6px]"
                 >
                   {item.label}
                 </Link>

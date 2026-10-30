@@ -20,13 +20,13 @@ export default async function Home() {
         <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_13rem] md:items-end">
           <div>
             <p className="kicker">Rutgers University · Class of 2027</p>
-            <h1 className="mt-3 text-[3rem] leading-[1.02] font-medium tracking-tight sm:text-[4.25rem]">{site.name}</h1>
+            <h1 className="mt-3 text-[3.25rem] leading-[1.02] font-medium tracking-tight sm:text-[5.5rem]">{site.name}</h1>
             <p className="mt-3 text-[1.35rem] text-muted italic">Physics, computer science, and mathematics.</p>
             <div className="mt-6 max-w-[38rem] space-y-4 text-[1.15rem] leading-relaxed text-pretty">
               <p>
-                I study physics and computer science at Rutgers, with a minor in math. In the Q-Sim Lab I make and measure spin
-                defects in hexagonal boron nitride, and I write most of the software around that work: the simulations, the data
-                pipelines, and the bench tools. I also run SCAR, Rutgers&apos; VEX U robotics team.
+                I study physics and computer science at Rutgers, with a minor in math. In the Q-Sim Lab I work on spin defects in
+                hexagonal boron nitride, and I write the analysis pipelines, simulations, and bench tools I use for that work. I
+                also run SCAR, Rutgers&apos; VEX U robotics team.
               </p>
               <p className="text-muted">I like problems where the method isn&apos;t obvious at the start.</p>
             </div>
@@ -52,9 +52,9 @@ export default async function Home() {
           ["Robotics", <>President, SCAR Robotics (VEX U). Worlds Top 20 in 2026</>],
           ["Studies", <>Senior year: B.S. Physics, B.S. Computer Science, Math minor</>],
         ].map(([label, body]) => (
-          <div key={label as string} className="bg-paper p-4">
-            <dt className="kicker">{label}</dt>
-            <dd className="mt-1.5 text-[1.02rem] leading-snug">{body}</dd>
+          <div key={label as string} className="bg-paper p-5">
+            <dt className="kicker text-accent">{label}</dt>
+            <dd className="mt-2 text-[1.02rem] leading-snug">{body}</dd>
           </div>
         ))}
       </dl>
@@ -66,7 +66,7 @@ export default async function Home() {
         aside={
           <>
             <p className="kicker mb-1.5">Methods</p>
-            SRIM/TRIM Monte Carlo · confocal photoluminescence · ODMR · AFM · PC/PVA dry transfer · Python analysis pipelines
+            SRIM/TRIM Monte Carlo · confocal photoluminescence · ODMR · AFM data analysis · Python analysis pipelines
           </>
         }
       >
@@ -74,8 +74,9 @@ export default async function Home() {
           <p>
             The negatively charged boron vacancy (VB⁻) in hexagonal boron nitride is a spin defect that can be read out optically
             at room temperature. Because it lives inside a layered crystal only nanometers thick, it can sit right against whatever
-            it is sensing. I work on making these defects on purpose: choosing ion-beam conditions with Monte Carlo simulation,
-            irradiating exfoliated flakes, and checking the result with photoluminescence mapping, AFM, and ODMR.
+            it is sensing. The project creates these defects on purpose by irradiating exfoliated flakes, then checks the result
+            with photoluminescence mapping and ODMR. My part includes the PL analysis pipeline, bench tools for PL and AFM data,
+            and Monte Carlo simulation for choosing beam conditions.
           </p>
         </div>
         <Figure n={1} src="/figures/srim-campaigns.png" alt="Six-panel SRIM analysis of helium-ion damage in a 10 nm hBN film on SiO2" width={2200} height={1337}>

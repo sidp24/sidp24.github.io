@@ -5,7 +5,6 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
 import { nav, site } from "@/content/site";
-import { getNotes } from "@/lib/notes";
 
 const serif = Newsreader({
   subsets: ["latin"],
@@ -40,18 +39,14 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#f6f4ee" },
-    { media: "(prefers-color-scheme: dark)", color: "#121315" },
+    { media: "(prefers-color-scheme: dark)", color: "#161210" },
   ],
 };
 
 // Applies a saved theme before first paint so there's no flash of the wrong one.
 const themeScript = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // Hide the Notes link until at least one note is published.
-  const hasNotes = (await getNotes()).length > 0;
-  const items = hasNotes ? nav : nav.filter((i) => i.href !== "/notes/");
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${serif.variable} ${mono.variable}`}>
       <head>
@@ -61,7 +56,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded focus:bg-paper focus:px-3 focus:py-2">
           Skip to content
         </a>
-        <Nav items={items} />
+        <div aria-hidden="true" className="h-[3px]" style={{ background: "var(--accent)" }} />
+        <Nav items={nav} />
         <main id="main" className="mx-auto w-full max-w-[68rem] px-4 sm:px-6">
           {children}
         </main>
