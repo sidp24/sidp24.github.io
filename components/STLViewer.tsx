@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { BufferGeometry, Material, Mesh } from "three";
 
 type Part = {
   file: string;
@@ -104,7 +105,7 @@ export default function STLViewer() {
       controls.minDistance = 1;
       controls.maxDistance = 20;
 
-      let currentMesh: THREE.Mesh | null = null;
+      let currentMesh: Mesh | null = null;
 
       async function loadPart(url: string) {
         if (cancelled) return;
@@ -113,7 +114,7 @@ export default function STLViewer() {
 
         try {
           const loader = new STLLoader();
-          const geometry = await new Promise<THREE.BufferGeometry>((resolve, reject) => {
+          const geometry = await new Promise<BufferGeometry>((resolve, reject) => {
             loader.load(url, resolve, undefined, reject);
           });
 
@@ -122,7 +123,7 @@ export default function STLViewer() {
           if (currentMesh) {
             scene.remove(currentMesh);
             currentMesh.geometry.dispose();
-            (currentMesh.material as THREE.Material).dispose();
+            (currentMesh.material as Material).dispose();
           }
 
           geometry.computeBoundingBox();
